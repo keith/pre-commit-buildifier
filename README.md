@@ -20,5 +20,13 @@ be autofixed. The `buildifier` hook fixes everything that can while the
 them you should use them in that order so you don't end up in duplicate
 warnings.
 
+If you'd like to pass custom flags to buildifier (as well as the default
+mode configurations) you can use pre-commit's `args`:
+
+```yaml
+    -   id: buildifier
+        args: [custom, flags]
+```
+
 [buildifier]: https://github.com/bazelbuild/buildtools/tree/master/buildifier
 [pc]: https://pre-commit.com
