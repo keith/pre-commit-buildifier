@@ -2,16 +2,15 @@
 
 set -euo pipefail
 
-readonly version=4.0.1
+readonly version=4.2.0
 # shellcheck disable=SC2034
-readonly darwin_amd64_sha=f4d0ede5af04b32671b9a086ae061df8f621f48ea139b01b3715bfa068219e4a
-# TODO: Separate once it's vendored
+readonly darwin_amd64_sha=c46ce67b2d98837ec0bdc38cc1032709499c2907fbae874c0bcdda5f1dd1450b
 # shellcheck disable=SC2034
-readonly darwin_arm64_sha=$darwin_amd64_sha
+readonly darwin_arm64_sha=a1700e9453fce304bf68aba02de75f5f291720ea1ad2eaf8147e4940c0058e09
 # shellcheck disable=SC2034
-readonly linux_amd64_sha=069a03fc1fa46135e3f71e075696e09389344710ccee798b2722c50a2d92d55a
+readonly linux_amd64_sha=3426f28d817ee5f4c5eba88bfa7c93b0cb9ab7784dd0d065d1e8e64a3fe9f680
 # shellcheck disable=SC2034
-readonly linux_arm64_sha=bfcad27eb6ec288ca200f9875ca16a2eec5958c8224ddd16cf9916193af46e61
+readonly linux_arm64_sha=95cbf539dae9250c5e5578f40b1895495d4e4befb86c51be1754f02864be8551
 
 os=linux
 if [[ $OSTYPE == darwin* ]]; then
@@ -21,11 +20,6 @@ fi
 arch=amd64
 if [[ $(uname -m) == arm64 ]]; then
   arch=arm64
-
-  # TODO: Remove once it's vendored
-  if [[ $OSTYPE == darwin* ]]; then
-    arch=amd64
-  fi
 fi
 
 readonly filename=buildifier-$os-$arch
