@@ -4,9 +4,11 @@
   entry: buildifier-wrapper.sh -mode=fix -lint=fix
   files: '^(.*/)?(BUILD\.bazel|BUILD|WORKSPACE)$|\.BUILD$|\.bzl$'
   language: script
+  require_serial: true
 - id: buildifier-lint
   name: buildifier-lint
   description: Lint starlark code with buildifier
   entry: buildifier-wrapper.sh -mode=diff -lint=warn
   files: '^(.*/)?(BUILD\.bazel|BUILD|WORKSPACE)$|\.BUILD$|\.bzl$'
   language: script
+  require_serial: true
