@@ -34,14 +34,20 @@ fi
 readonly sha_accessor=${os}_${arch}_sha
 readonly sha="${!sha_accessor}"
 mkdir -p "$binary_dir"
+tmp_binary=$(mktemp)
 
-if ! curl --fail --location --retry 5 --retry-connrefused --silent --output "$binary" "$url"; then
+if ! curl --fail --location --retry 5 --retry-connrefused --silent --output "$tmp_binary" "$url"; then
   echo "error: failed to download buildifier" >&2
   exit 1
 fi
 
-if echo "$sha  $binary" | shasum --check --status; then
-  chmod +x "$binary"
+if echo "$sha  $tmp_binary" | shasum --check --status; then
+  # Protect against races of concurrent hooks downloading the same binary
+  if [[ ! -x "$binary" ]]; then
+    mv "$tmp_binary" "$binary"
+    chmod +x "$binary"
+  fi
+
   exec "$binary" "$@"
 else
   echo "error: buildifier sha mismatch" >&2
