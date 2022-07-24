@@ -2,15 +2,15 @@
 
 set -euo pipefail
 
-readonly version=5.0.1
+readonly version=5.1.0
 # shellcheck disable=SC2034
-readonly darwin_amd64_sha=2cb0a54683633ef6de4e0491072e22e66ac9c6389051432b76200deeeeaf93fb
+readonly darwin_amd64_sha=c9378d9f4293fc38ec54a08fbc74e7a9d28914dae6891334401e59f38f6e65dc
 # shellcheck disable=SC2034
-readonly darwin_arm64_sha=4da23315f0dccabf878c8227fddbccf35545b23b3cb6225bfcf3107689cc4364
+readonly darwin_arm64_sha=745feb5ea96cb6ff39a76b2821c57591fd70b528325562486d47b5d08900e2e4
 # shellcheck disable=SC2034
-readonly linux_amd64_sha=3ed7358c7c6a1ca216dc566e9054fd0b97a1482cb0b7e61092be887d42615c5d
+readonly linux_amd64_sha=52bf6b102cb4f88464e197caac06d69793fa2b05f5ad50a7e7bf6fbd656648a3
 # shellcheck disable=SC2034
-readonly linux_arm64_sha=c657c628fca72b7e0446f1a542231722a10ba4321597bd6f6249a5da6060b6ff
+readonly linux_arm64_sha=917d599dbb040e63ae7a7e1adb710d2057811902fdc9e35cce925ebfd966eeb8
 
 os=linux
 if [[ $OSTYPE == darwin* ]]; then
