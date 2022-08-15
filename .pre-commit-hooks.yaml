@@ -1,12 +1,12 @@
 - id: buildifier
   name: buildifier
   description: Format starlark code with buildifier
-  entry: buildifier-wrapper.sh -mode=fix -lint=fix
+  entry: buildifier-wrapper.sh fix -mode=fix -lint=fix
   files: '^(.*/)?(BUILD\.bazel|BUILD|WORKSPACE)$|\.BUILD$|\.bzl$'
   language: script
 - id: buildifier-lint
   name: buildifier-lint
   description: Lint starlark code with buildifier
-  entry: buildifier-wrapper.sh -mode=diff -lint=warn
+  entry: buildifier-wrapper.sh lint -mode=diff -lint=warn
   files: '^(.*/)?(BUILD\.bazel|BUILD|WORKSPACE)$|\.BUILD$|\.bzl$'
   language: script

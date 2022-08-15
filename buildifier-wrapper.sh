@@ -25,7 +25,8 @@ fi
 readonly filename=buildifier-$os-$arch
 readonly url=https://github.com/bazelbuild/buildtools/releases/download/$version/$filename
 readonly binary_dir=~/.cache/pre-commit/buildifier/$os-$arch-$version/buildifier
-readonly binary=$binary_dir/buildifier
+readonly binary=$binary_dir/buildifier-$1
+shift
 
 if [[ -x "$binary" ]]; then
   exec "$binary" "$@"
@@ -42,10 +43,11 @@ if ! curl --fail --location --retry 5 --retry-connrefused --silent --output "$tm
 fi
 
 if echo "$sha  $tmp_binary" | shasum --check --status; then
+  chmod +x "$tmp_binary"
+
   # Protect against races of concurrent hooks downloading the same binary
   if [[ ! -x "$binary" ]]; then
     mv "$tmp_binary" "$binary"
-    chmod +x "$binary"
   fi
 
   exec "$binary" "$@"
