@@ -43,7 +43,12 @@ if ! curl --fail --location --retry 5 --retry-connrefused --silent --output "$tm
   exit 1
 fi
 
-if echo "$sha  $tmp_binary" | shasum --check --status; then
+shabin=shasum
+if ! command -v "$shabin" >/dev/null; then
+  shabin=sha256sum
+fi
+
+if echo "$sha  $tmp_binary" | $shabin --check --status; then
   chmod +x "$tmp_binary"
 
   # Protect against races of concurrent hooks downloading the same binary
