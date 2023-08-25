@@ -2,15 +2,15 @@
 
 set -euo pipefail
 
-readonly version=6.1.0
+readonly version=v6.3.3
 # shellcheck disable=SC2034
-readonly darwin_amd64_sha=fc61455f2137c8ea16c299a01cd1d3bfae74edab1da2b97778921691504a2809
+readonly darwin_amd64_sha=3c36a3217bd793815a907a8e5bf81c291e2d35d73c6073914640a5f42e65f73f
 # shellcheck disable=SC2034
-readonly darwin_arm64_sha=0eef36edd99798fa4ff7099257a847ecaad96a0ef41a5748e9091cd393ee20bc
+readonly darwin_arm64_sha=9bb366432d515814766afcf6f9010294c13876686fbbe585d5d6b4ff0ca3e982
 # shellcheck disable=SC2034
-readonly linux_amd64_sha=0b51a6cb81bc3b51466ea2210053992654987a907063d0c2b9c03be29de52eff
+readonly linux_amd64_sha=42f798ec532c58e34401985043e660cb19d5ae994e108d19298c7d229547ffca
 # shellcheck disable=SC2034
-readonly linux_arm64_sha=5acdd65684105f73d1c65ee4737f6cf388afff8674eb88045aa3c204811b02f3
+readonly linux_arm64_sha=6a03a1cf525045cb686fc67cd5d64cface5092ebefca3c4c93fb6e97c64e07db
 
 
 os=linux
