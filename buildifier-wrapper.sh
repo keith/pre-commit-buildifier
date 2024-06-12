@@ -19,7 +19,7 @@ if [[ $OSTYPE == darwin* ]]; then
 fi
 
 arch=amd64
-if [[ $(uname -m) == arm64 ]]; then
+if [[ $(uname -m) == arm64 ]] || [[ $(uname -m) == aarch64 ]]; then
   arch=arm64
 fi
 
