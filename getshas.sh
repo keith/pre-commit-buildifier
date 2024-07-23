@@ -22,7 +22,7 @@ do
     if [[ $os == windows && $arch == arm64 ]]; then
       continue
     fi
-    
+
     # Special handling for Windows to include ".exe" extension
     if [[ $os == windows ]]; then
       filename="buildifier-$os-$arch.exe"
@@ -40,7 +40,7 @@ do
     sha=$(getsha "$bin" | cut -d ' ' -f 1)
     echo "# shellcheck disable=SC2034"
     echo "readonly ${os}_${arch}_sha=$sha"
-    
-    rm "$bin"
+
+    rm -f "$bin"
   done
 done

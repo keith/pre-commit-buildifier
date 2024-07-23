@@ -15,10 +15,12 @@ readonly linux_arm64_sha=18540fc10f86190f87485eb86963e603e41fa022f88a2d1b0cf52ff
 readonly windows_amd64_sha=da8372f35e34b65fb6d997844d041013bb841e55f58b54d596d35e49680fe13c
 
 os=linux
+extension=""
 if [[ $OSTYPE == darwin* ]]; then
   os=darwin
 elif [[ $OSTYPE == msys* || $OSTYPE == cygwin* || $OSTYPE == win32 ]]; then
   os=windows
+  extension=".exe"
 fi
 
 arch=amd64
@@ -26,12 +28,7 @@ if [[ $(uname -m) == arm64 ]] || [[ $(uname -m) == aarch64 ]]; then
   arch=arm64
 fi
 
-if [[ $os == "windows" ]]; then
-  readonly filename=buildifier-windows-amd64.exe
-else
-  readonly filename=buildifier-$os-$arch
-fi
-
+readonly filename=buildifier-$os-${arch}${extension}
 readonly url=https://github.com/bazelbuild/buildtools/releases/download/$version/$filename
 readonly binary_dir=~/.cache/pre-commit/buildifier/$os-$arch-$version/buildifier
 readonly binary=$binary_dir/buildifier-$1
@@ -59,9 +56,12 @@ fi
 
 if echo "$sha  $tmp_binary" | $shabin --check --status; then
   chmod +x "$tmp_binary"
+
+  # Protect against races of concurrent hooks downloading the same binary
   if [[ ! -x "$binary" ]]; then
     mv "$tmp_binary" "$binary"
   fi
+
   exec "$binary" "$@"
 else
   echo "error: buildifier sha mismatch" >&2
