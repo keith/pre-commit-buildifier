@@ -11,11 +11,16 @@ readonly darwin_arm64_sha=fa07ba0d20165917ca4cc7609f9b19a8a4392898148b7babdf6bb2
 readonly linux_amd64_sha=be63db12899f48600bad94051123b1fd7b5251e7661b9168582ce52396132e92
 # shellcheck disable=SC2034
 readonly linux_arm64_sha=18540fc10f86190f87485eb86963e603e41fa022f88a2d1b0cf52ff252b5e1dd
-
+# shellcheck disable=SC2034
+readonly windows_amd64_sha=da8372f35e34b65fb6d997844d041013bb841e55f58b54d596d35e49680fe13c
 
 os=linux
+extension=""
 if [[ $OSTYPE == darwin* ]]; then
   os=darwin
+elif [[ $OSTYPE == msys* || $OSTYPE == cygwin* || $OSTYPE == win32 ]]; then
+  os=windows
+  extension=".exe"
 fi
 
 arch=amd64
@@ -23,7 +28,7 @@ if [[ $(uname -m) == arm64 ]] || [[ $(uname -m) == aarch64 ]]; then
   arch=arm64
 fi
 
-readonly filename=buildifier-$os-$arch
+readonly filename=buildifier-$os-${arch}${extension}
 readonly url=https://github.com/bazelbuild/buildtools/releases/download/$version/$filename
 readonly binary_dir=~/.cache/pre-commit/buildifier/$os-$arch-$version/buildifier
 readonly binary=$binary_dir/buildifier-$1
@@ -35,6 +40,7 @@ fi
 
 readonly sha_accessor=${os}_${arch}_sha
 readonly sha="${!sha_accessor}"
+
 mkdir -p "$binary_dir"
 tmp_binary=$(mktemp)
 

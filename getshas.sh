@@ -13,12 +13,24 @@ getsha() {
 readonly version="$1"
 echo "readonly version=$version"
 
-for os in darwin linux
+# List of operating systems and architectures
+for os in darwin linux windows
 do
   for arch in amd64 arm64
   do
-    filename=buildifier-$os-$arch
-    url=https://github.com/bazelbuild/buildtools/releases/download/$version/$filename
+    # Skip arm64 for windows since there is no build for it
+    if [[ $os == windows && $arch == arm64 ]]; then
+      continue
+    fi
+
+    # Special handling for Windows to include ".exe" extension
+    if [[ $os == windows ]]; then
+      filename="buildifier-$os-$arch.exe"
+    else
+      filename="buildifier-$os-$arch"
+    fi
+
+    url="https://github.com/bazelbuild/buildtools/releases/download/$version/$filename"
     bin=$(mktemp)
     if ! curl --fail --silent -L "$url" -o "$bin"; then
       echo "error: failed to download $url, is the version correct?"
@@ -28,5 +40,7 @@ do
     sha=$(getsha "$bin" | cut -d ' ' -f 1)
     echo "# shellcheck disable=SC2034"
     echo "readonly ${os}_${arch}_sha=$sha"
+
+    rm -f "$bin"
   done
 done
