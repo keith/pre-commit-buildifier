@@ -42,7 +42,9 @@ readonly sha_accessor=${os}_${arch}_sha
 readonly sha="${!sha_accessor}"
 
 mkdir -p "$binary_dir"
-tmp_binary=$(mktemp)
+# Create tmp_binary in the same directory as binary to make mv atomic.
+tmp_binary="$(mktemp --tmpdir="$binary_dir")"
+trap 'rm -f "$tmp_binary"' EXIT
 
 if ! curl --fail --location --retry 5 --retry-connrefused --silent --output "$tmp_binary" "$url"; then
   echo "error: failed to download buildifier" >&2
@@ -56,12 +58,7 @@ fi
 
 if echo "$sha  $tmp_binary" | $shabin --check --status; then
   chmod +x "$tmp_binary"
-
-  # Protect against races of concurrent hooks downloading the same binary
-  if [[ ! -x "$binary" ]]; then
-    mv "$tmp_binary" "$binary"
-  fi
-
+  mv "$tmp_binary" "$binary"
   exec "$binary" "$@"
 else
   echo "error: buildifier sha mismatch" >&2
