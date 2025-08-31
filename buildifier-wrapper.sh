@@ -46,7 +46,7 @@ mkdir -p "$binary_dir"
 tmp_binary="$(mktemp --tmpdir="$binary_dir")"
 trap 'rm -f "$tmp_binary"' EXIT
 
-if ! curl --fail --location --retry 5 --retry-connrefused --silent --output "$tmp_binary" "$url"; then
+if ! wget --retry-connrefused --quiet --output-document "$tmp_binary" "$url"; then
   echo "error: failed to download buildifier" >&2
   exit 1
 fi
