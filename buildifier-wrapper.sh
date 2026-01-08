@@ -29,10 +29,26 @@ if [[ $(uname -m) == arm64 ]] || [[ $(uname -m) == aarch64 ]]; then
 fi
 
 readonly filename=buildifier-$os-${arch}${extension}
-readonly url=https://github.com/bazelbuild/buildtools/releases/download/$version/$filename
+readonly default_base_url=https://github.com/bazelbuild/buildtools/releases/download/$version
 readonly binary_dir=~/.cache/pre-commit/buildifier/$os-$arch-$version/buildifier
 readonly binary=$binary_dir/buildifier-$1
 shift
+
+# Parse --buildifier-base-url argument if present.
+base_url_arg=""
+buildifier_args=()
+for arg in "$@"; do
+  if [[ $arg == --buildifier-base-url=* ]]; then
+    base_url_arg="${arg#--buildifier-base-url=}"
+  else
+    buildifier_args+=("$arg")
+  fi
+done
+# Replace positional args with filtered args (handles empty array safely with set -u).
+set -- ${buildifier_args[@]+"${buildifier_args[@]}"}
+
+readonly base_url=${base_url_arg:-${BUILDIFIER_BASE_URL:-$default_base_url}}
+readonly url=$base_url/$filename
 
 if [[ -x "$binary" ]]; then
   exec "$binary" "$@"
