@@ -28,5 +28,24 @@ mode configurations) you can use pre-commit's `args`:
         args: [custom, flags]
 ```
 
+## Custom Download URL
+
+If you need to download buildifier from a custom URL (e.g., an internal
+mirror or artifact server), you can use the `--buildifier-base-url`
+argument:
+
+```yaml
+-   repo: https://github.com/keith/pre-commit-buildifier
+    rev: TAG OR SHA
+    hooks:
+    -   id: buildifier
+        args: [--buildifier-base-url=https://my-internal-mirror.example.com/buildifier/v8.2.1]
+    -   id: buildifier-lint
+        args: [--buildifier-base-url=https://my-internal-mirror.example.com/buildifier/v8.2.1]
+```
+
+The script will append the appropriate filename (e.g.,
+`buildifier-linux-amd64`) to this base URL.
+
 [buildifier]: https://github.com/bazelbuild/buildtools/tree/master/buildifier
 [pc]: https://pre-commit.com
