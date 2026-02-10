@@ -50,6 +50,10 @@ set -- ${buildifier_args[@]+"${buildifier_args[@]}"}
 readonly base_url=${base_url_arg:-${BUILDIFIER_BASE_URL:-$default_base_url}}
 readonly url=$base_url/$filename
 
+# Unset DISPLAY to prevent deprecation warning about selecting
+# diff program via environment variables. WSL always sets DISPLAY.
+unset DISPLAY
+
 if [[ -x "$binary" ]]; then
   exec "$binary" "$@"
 fi
