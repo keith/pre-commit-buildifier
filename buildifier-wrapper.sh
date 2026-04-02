@@ -13,6 +13,8 @@ readonly linux_amd64_sha=887377fc64d23a850f4d18a077b5db05b19913f4b99b270d193f3c7
 readonly linux_arm64_sha=947bf6700d708026b2057b09bea09abbc3cafc15d9ecea35bb3885c4b09ccd04
 # shellcheck disable=SC2034
 readonly windows_amd64_sha=f4ecb9c73de2bc38b845d4ee27668f6248c4813a6647db4b4931a7556052e4e1
+# shellcheck disable=SC2034
+readonly windows_arm64_sha=55a276ad8b1ff46be48bf64e432264034ea69a45aa3914e89c1d1936f5c2d85c
 
 os=linux
 extension=""

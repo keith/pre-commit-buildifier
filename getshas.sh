@@ -18,11 +18,6 @@ for os in darwin linux windows
 do
   for arch in amd64 arm64
   do
-    # Skip arm64 for windows since there is no build for it
-    if [[ $os == windows && $arch == arm64 ]]; then
-      continue
-    fi
-
     # Special handling for Windows to include ".exe" extension
     if [[ $os == windows ]]; then
       filename="buildifier-$os-$arch.exe"
