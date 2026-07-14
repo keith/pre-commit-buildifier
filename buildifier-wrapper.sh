@@ -32,7 +32,7 @@ fi
 
 readonly filename=buildifier-$os-${arch}${extension}
 readonly default_base_url=https://github.com/bazelbuild/buildtools/releases/download/$version
-readonly binary_dir=~/.cache/pre-commit/buildifier/$os-$arch-$version/buildifier
+readonly binary_dir="${XDG_CACHE_HOME:-~/.cache}"/pre-commit/buildifier/$os-$arch-$version/buildifier
 readonly binary=$binary_dir/buildifier-$1
 shift
 
