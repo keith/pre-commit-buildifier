@@ -6,7 +6,10 @@ to a specific version.
 
 ## Usage
 
+In `.pre-commit-config.yaml`:
+
 ```yaml
+repos:
 -   repo: https://github.com/keith/pre-commit-buildifier
     rev: TAG OR SHA
     hooks:
